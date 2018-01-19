@@ -7,7 +7,7 @@ function flattenOrigin(arr) {
   var result = [];
   for (var i = 0, len = arr.length; i < len; i++) {
       if (Array.isArray(arr[i])) {
-          result = result.concat(flatten(arr[i]))
+          result = result.concat(flattenOrigin(arr[i]))
       }
       else {
           result.push(arr[i])
@@ -26,10 +26,10 @@ function flatten2string(arr) {
 // reduce
 function flatten2reduce(arr) {
   return arr.reduce(function(prev, next){
-      return prev.concat(Array.isArray(next) ? flatten(next) : next)
+      return prev.concat(Array.isArray(next) ? flatten2reduce(next) : next)
   }, [])
 }
-
+// some() 方法测试数组中的某些元素是否通过由提供的函数实现的测试。
 function flatten1(arr) {
 
   while (arr.some(item => Array.isArray(item))) {
@@ -90,4 +90,7 @@ function flatten(input, shallow, strict, output) {
 
 }
 
+console.log(flatten(arr, false, false)); // [1, 2, 3, 4]
+console.log(flatten(arr, true, false)); // [1, 2, [3, 4]]
+console.log(flatten(arr, false, true)); // []
 console.log(flatten(arr, true, true)); // [3, 4]
