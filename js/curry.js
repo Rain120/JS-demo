@@ -1,5 +1,18 @@
 // 柯里化是一种将使用多个参数的一个函数转换成一系列使用一个参数的函数的技术。
-
+function curry(fn) {
+  var _args = [];
+  return function() {
+    [].push.apply(_args, [].slice.call(arguments));
+    if(_args.lenght === fn.length) {
+      const args = _args;
+      _args = [];
+      return fn.apply(this, args);
+    }
+    
+    // return arguments.callee;  // 包含当前正在执行的函数,但是ES5被禁止使用了
+    return curry.call(this);
+  }
+}
 function curry3(fn, args) {
   length = fn.length;
 
